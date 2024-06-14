@@ -1,0 +1,146 @@
+{
+	"root": true,
+	"ignorePatterns": [
+		"projects/**/*"
+	],
+	"plugins": [
+		"simple-import-sort",
+		"unused-imports"
+	],
+	"settings": {
+		"import/resolver": {
+			"typescript": true
+		}
+	},
+	"overrides": [
+		{
+			"files": [
+				"*.ts"
+			],
+			"parserOptions": {
+				"project": [
+					"tsconfig.json",
+					"e2e/tsconfig.json"
+				],
+				"createDefaultProgram": true
+			},
+			"extends": [
+				"plugin:@angular-eslint/recommended",
+				"plugin:@angular-eslint/template/process-inline-templates",
+				"plugin:prettier/recommended",
+				"plugin:import/recommended"
+			],
+			"rules": {
+				"@angular-eslint/component-class-suffix": [
+					"error",
+					{
+						"suffixes": [
+							"Page",
+							"Component"
+						]
+					}
+				],
+				"@angular-eslint/component-selector": [
+					"error",
+					{
+						"type": "element",
+						"prefix": "app",
+						"style": "kebab-case"
+					}
+				],
+				"@angular-eslint/directive-selector": [
+					"error",
+					{
+						"type": "attribute",
+						"style": "camelCase"
+					}
+				],
+				"@typescript-eslint/no-unused-vars": 0,
+				"@typescript-eslint/member-ordering": 0,
+				"@typescript-eslint/naming-convention": 0,
+				"@angular-eslint/no-host-metadata-property": 0,
+				"prettier/prettier": [
+					"error",
+					{
+						"endOfLine": "auto"
+					}
+				],
+				"simple-import-sort/imports": [
+					"error",
+					{
+						"groups": [
+							// `angular` first, `rxjs` second, then packages starting with a character
+							[
+								"^angular",
+								"^rxjs",
+								"^[a-z]"
+							],
+							// Packages starting with `@`
+							[
+								"^@"
+							],
+							// Packages starting with `~`
+							[
+								"^~"
+							],
+							// Imports starting with `../`
+							[
+								"^\\.\\.(?!/?$)",
+								"^\\.\\./?$"
+							],
+							// Imports starting with `./`
+							[
+								"^\\./(?=.*/)(?!/?$)",
+								"^\\.(?!/?$)",
+								"^\\./?$"
+							],
+							// Style imports
+							[
+								"^.+\\.s?css$"
+							],
+							// Side effect imports
+							[
+								"^\\u0000"
+							]
+						]
+					}
+				],
+				"import/newline-after-import": "error",
+				"import/named": 0,
+				"import/no-unresolved": 0,
+				"unused-imports/no-unused-imports": "error"
+			}
+		},
+		// NOTE: WE ARE NOT APPLYING PRETTIER IN THIS OVERRIDE, ONLY @ANGULAR-ESLINT/TEMPLATE
+		{
+			"files": [
+				"*.html"
+			],
+			"extends": [
+				"plugin:@angular-eslint/template/recommended"
+			],
+			"rules": {}
+		},
+		// NOTE: WE ARE NOT APPLYING @ANGULAR-ESLINT/TEMPLATE IN THIS OVERRIDE, ONLY PRETTIER
+		{
+			"files": [
+				"*.html"
+			],
+			"excludedFiles": [
+				"*inline-template-*.component.html"
+			],
+			"extends": [
+				"plugin:prettier/recommended"
+			],
+			"rules": {
+				// NOTE: WE ARE OVERRIDING THE DEFAULT CONFIG TO ALWAYS SET THE PARSER TO ANGULAR (SEE BELOW)
+				"prettier/prettier": [
+					"error",
+					{
+						"parser": "angular"
+					}
+				]
+			}
+		}
+	]
+}
